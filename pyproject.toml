@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coding-test"
+version = "0.1.0"
+description = "SDET interview BDD demo with pytest-bdd"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+  "pytest==9.0.2",
+  "pytest-bdd==7.2.0",
+  "requests==2.32.5",
+  "selenium==4.40.0",
+  "webdriver-manager==4.0.2"
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

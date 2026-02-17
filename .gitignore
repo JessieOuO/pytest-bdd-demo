@@ -1,0 +1,78 @@
+# =========================
+# OS
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Python Bytecode
+# =========================
+__pycache__/
+*.py[cod]
+*.pyc.*
+*.py,cover
+
+# =========================
+# Distribution
+# =========================
+*$py.class
+.Python
+build/
+dist/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
+.installed.cfg
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# =========================
+# Test
+# =========================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+allure-results/
+allure-report/
+playwright-report/
+.selenium/
+*.log
+
+# =========================
+# Type checkers
+# =========================
+.mypy_cache/
+.pyright/
+.pytype/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+.ipynb_checkpoints/
+
+
