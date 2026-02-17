@@ -1,4 +1,4 @@
-# SDET BDD Demo - pytest-bdd + Selenium + Security Scenarios
+# SDET BDD - pytest-bdd + Selenium + Security Scenarios
 
 feature file (Gherkin) → @scenario (pytest 入口) → @given/@when/@then (Python code)
 
