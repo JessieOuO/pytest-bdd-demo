@@ -21,3 +21,6 @@ test = [
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
+markers = [
+  "ui: UI tests that require a web server running on localhost:3000"
+]
