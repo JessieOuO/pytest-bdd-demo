@@ -4,10 +4,11 @@
 
 ```bash
 source .venv/bin/activate  # 或 .venv\Scripts\activate (Windows)
-pytest tests/steps/test_login_steps.py -v
+pytest -m api -v
 ```
 
 ✅ 這會測試 AuthService 的核心業務邏輯（登入、鎖定、錯誤處理）
+✅ 3 個測試，不需要 Flask server
 
 ## 方式 2: 完整測試（API + UI）
 
@@ -27,18 +28,41 @@ Demo credentials:
   Password: demo
 ```
 
-### 步驟 2: 執行所有測試
+### 步驟 2: 執行測試
 
 **Terminal 2:**
+
 ```bash
 source .venv/bin/activate
+
+# 選項 A: 跑所有測試
 pytest -v
+
+# 選項 B: 只跑 UI 測試
+pytest -m ui -v
+
+# 選項 C: 跑 API + UI 測試
+pytest -m "api or ui" -v
 ```
 
 預期結果:
 ```
 6 passed (3 API + 3 UI)
 ```
+
+## 測試分類 (Markers)
+
+專案使用 pytest markers 來分類測試:
+
+| Marker | 測試數量 | 需要 Server | 執行指令 |
+|--------|---------|------------|----------|
+| `@pytest.mark.api` | 3 | ❌ 不需要 | `pytest -m api -v` |
+| `@pytest.mark.ui` | 3 | ✅ 需要 | `pytest -m ui -v` |
+
+**優點:**
+- 可以只跑特定類型的測試
+- CI/CD 可以分別執行（API 測試跑快速檢查，UI 測試跑完整驗證）
+- 開發時不用啟動 server 也能跑 API 測試
 
 ## 方式 3: 手動測試 Web UI
 

@@ -34,12 +34,16 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e ".[test]"
 
 # 3. 跑 API 測試（不需要 web server）
+pytest -m api -v   # 使用 marker
+# 或
 pytest tests/steps/test_login_steps.py -v
 
 # 4. 跑 UI 測試（需要先啟動 web server）
 # Terminal 1: 啟動 Flask server
 python run_server.py
 # Terminal 2: 執行 UI 測試
+pytest -m ui -v    # 使用 marker
+# 或
 pytest tests/steps/test_login_ui_steps.py -v
 
 # 5. 跑所有測試（需要 server 在背景執行）
