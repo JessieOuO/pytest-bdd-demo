@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Security Demo{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+
+{% if error %}
+<div class="error-message">{{ error }}</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('login') }}">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+
+    <button type="submit" {% if login_disabled %}disabled{% endif %}>
+        {% if login_disabled %}Locked{% else %}Login{% endif %}
+    </button>
+</form>
+
+<p style="margin-top: 20px; text-align: center; color: #888; font-size: 14px;">
+    Demo credentials: <strong>demo</strong> / <strong>demo</strong>
+</p>
+{% endblock %}

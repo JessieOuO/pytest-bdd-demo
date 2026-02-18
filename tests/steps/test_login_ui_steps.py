@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 import pytest
+import requests
 from pytest_bdd import scenario, given, when, then, parsers
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -68,22 +69,28 @@ def base_url() -> str:
     return "http://localhost:3000"  # 假設你的前端跑在這
 
 
+@pytest.fixture(autouse=True, scope="function")
+def reset_server_state(base_url: str):
+    """Reset server state before each UI test to ensure test isolation."""
+    try:
+        requests.post(f"{base_url}/reset-test-state", timeout=2)
+    except requests.exceptions.RequestException:
+        pass  # Server might not be running, tests will fail anyway
+
+
 @pytest.mark.ui
-@pytest.mark.skip(reason="Requires web server running on localhost:3000")
 @scenario("features/login_ui.feature", "Successful login via UI")
 def test_ui_login_success():
     """UI BDD: happy path login."""
 
 
 @pytest.mark.ui
-@pytest.mark.skip(reason="Requires web server running on localhost:3000")
 @scenario("features/login_ui.feature", "Lockout after multiple failed login attempts")
 def test_ui_lockout():
     """UI BDD: brute-force protection."""
 
 
 @pytest.mark.ui
-@pytest.mark.skip(reason="Requires web server running on localhost:3000")
 @scenario("features/login_ui.feature", "Permission denied for unauthorized page")
 def test_ui_permission_denied():
     """UI BDD: unauthorized access."""
@@ -117,7 +124,7 @@ def enter_credentials_multiple(login_page: LoginPage, username: str, password: s
         time.sleep(0.5)
 
 
-@when('I try to access "{path}" without login')
+@when(parsers.parse('I try to access "{path}" without login'))
 def access_protected_page(chrome_driver: webdriver.Chrome, base_url: str, path: str):
     chrome_driver.get(f"{base_url}{path}")
 
@@ -129,7 +136,7 @@ def verify_dashboard(login_page: LoginPage):
     )
 
 
-@then('I should see "{message}" error')
+@then(parsers.parse('I should see "{message}" error'))
 def verify_error_message(login_page: LoginPage, message: str):
     actual = login_page.get_error_message()
     assert message in actual

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<div class="dashboard-content">
+    <h1>Admin Panel</h1>
+    <p>Welcome to the admin area, {{ username }}.</p>
+
+    <div style="margin-top: 30px;">
+        <a href="{{ url_for('dashboard') }}" style="margin-right: 10px; display: inline-block; padding: 10px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px;">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+    </div>
+</div>
+{% endblock %}
