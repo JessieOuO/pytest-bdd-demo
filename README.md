@@ -36,28 +36,25 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 # 2. 安裝依賴
 pip install -e ".[test]"
 
-# 3. 跑 Unit 測試（不需要 web server）
-pytest -m unit -v   # 直接測試 AuthService 業務邏輯
-# 或
-pytest tests/steps/test_login_steps.py -v
+# 3. 跑 Unit 測試（直接測試 AuthService 業務邏輯，不需要 web server）
+pytest -m unit -v   # pytest tests/steps/test_login_steps.py -v
 
-# 4. 跑 API 測試（需要先啟動 web server）
+# 4. 跑 API 測試（測試 HTTP endpoints，需要先啟動 web server）
 # Terminal 1: 啟動 Flask server
 python run_server.py
 # Terminal 2: 執行 API 測試
-pytest -m api -v    # 測試 HTTP endpoints
-# 或
-pytest tests/test_api_endpoints.py -v
+pytest -m api -v    # pytest tests/test_api_endpoints.py -v
 
-# 5. 跑 UI 測試（需要先啟動 web server）
-# Terminal 1: 啟動 Flask server（如果還沒啟動）
+# 5. 跑 UI 測試（執行 Web UI 測試，需要先啟動 web server）
+# Terminal 1: 啟動 Flask server
 python run_server.py
-# Terminal 2: 執行 UI 測試
-pytest -m ui -v    # 使用 marker
-# 或
-pytest tests/steps/test_login_ui_steps.py -v
+# Terminal 2: 執行 Web UI 測試
+pytest -m ui -v    # pytest tests/steps/test_login_ui_steps.py -v
 
 # 6. 跑所有測試（需要 server 在背景執行）
+# Terminal 1: 啟動 Flask server
+python run_server.py
+# Terminal 2
 pytest -v
 
 # 7. 手動測試 Web UI
