@@ -14,9 +14,9 @@ feature file (Gherkin) → @scenario (pytest 入口) → @given/@when/@then (Pyt
 ```
 .
 ├── src/app/
-│   ├── auth.py                # AuthService 業務邏輯
-│   ├── web.py                 # Flask web 應用程式
-│   └── templates/             # HTML 模板
+│   ├── auth.py              # AuthService 業務邏輯
+│   ├── web.py               # Flask web 應用程式
+│   └── templates/           # HTML 模板
 ├── tests/
 │   ├── steps/
 │   │   ├── test_login_steps.py      # Unit BDD 測試（直接測 AuthService）
