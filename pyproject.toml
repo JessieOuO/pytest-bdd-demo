@@ -23,6 +23,7 @@ test = [
 addopts = "-q"
 testpaths = ["tests"]
 markers = [
-  "api: API tests that test the AuthService directly (no web server needed)",
+  "unit: Unit tests that test the AuthService directly (no web server needed)",
+  "api: API tests that test HTTP endpoints (requires web server running)",
   "ui: UI tests that require a web server running on localhost:3000"
 ]

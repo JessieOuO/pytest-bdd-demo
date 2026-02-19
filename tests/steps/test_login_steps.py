@@ -9,19 +9,19 @@ from pytest_bdd import scenario, given, when, then, parsers
 from app.auth import AuthService
 
 
-@pytest.mark.api
+@pytest.mark.unit
 @scenario("features/login.feature", "Login with valid credentials")
 def test_login_success():
     """BDD: happy path login."""
 
 
-@pytest.mark.api
+@pytest.mark.unit
 @scenario("features/login.feature", "Login with wrong password")
 def test_login_wrong_password():
     """BDD: wrong password."""
 
 
-@pytest.mark.api
+@pytest.mark.unit
 @scenario("features/login.feature", "Login with too many failed attempts")
 def test_login_too_many_attempts():
     """BDD: lockout behavior."""
