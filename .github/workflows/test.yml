@@ -1,9 +1,119 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [master, main, develop]
+  pull_request:
+    branches: [master, main, develop]
+  workflow_dispatch:
+
 jobs:
-  test:
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: python-version: '3.11'
-      - run: pip install -e ".[test]"
-      - run: pytest tests/ --html=report.html --self-contained-html
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -e ".[test]"
+
+      - name: Run unit tests
+        run: pytest -m unit -v --html=report-unit.html --self-contained-html
+
+      - name: Upload unit test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report-py${{ matrix.python-version }}
+          path: report-unit.html
+
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -e ".[test]"
+
+      - name: Start Flask server
+        run: |
+          python run_server.py &
+          echo "Waiting for server to start..."
+          sleep 5
+          curl -f http://localhost:3000 || (echo "Server failed to start" && exit 1)
+
+      - name: Run API tests
+        run: pytest -m api -v --html=report-api.html --self-contained-html
+
+      - name: Upload API test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-report
+          path: report-api.html
+
+  ui-tests:
+    name: UI Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -e ".[test]"
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Start Flask server
+        run: |
+          python run_server.py &
+          echo "Waiting for server to start..."
+          sleep 5
+          curl -f http://localhost:3000 || (echo "Server failed to start" && exit 1)
+
+      - name: Run UI tests
+        run: pytest -m ui -v --html=report-ui.html --self-contained-html
+
+      - name: Upload UI test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-test-report
+          path: report-ui.html
+
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-test-screenshots
+          path: screenshots/
