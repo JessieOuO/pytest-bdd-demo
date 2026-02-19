@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "coding-test"
+name = "pytest-bdd-demo"
 version = "0.1.0"
 description = "SDET interview BDD demo with pytest-bdd"
 requires-python = ">=3.11"
