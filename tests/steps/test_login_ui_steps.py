@@ -49,11 +49,16 @@ class LoginPage:
 @pytest.fixture
 def chrome_driver():
     """Headless Chrome for CI, non-headless for local debugging."""
+    import os
     options = webdriver.ChromeOptions()
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
-    # options.add_argument("--headless=new")  # 面試時可以取消註解
+
+    # Enable headless mode in CI environments
+    if os.getenv('CI') == 'true':
+        options.add_argument("--headless=new")
+
     driver = webdriver.Chrome(options=options)
     yield driver
     driver.quit()
