@@ -8,7 +8,6 @@ Run: python run_server.py
 """
 
 from __future__ import annotations
-from typing import Dict, Any
 
 import pytest
 import requests
@@ -17,13 +16,14 @@ import requests
 BASE_URL = "http://localhost:3000"
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def reset_server_state():
-    """Reset server state before running API tests."""
+    """Reset server state before each test."""
     try:
         response = requests.post(f"{BASE_URL}/reset-test-state", timeout=2)
         if response.status_code == 200:
-            print("\n✓ Server state reset successfully")
+            print("\nServer state reset successfully")
+            return True
     except requests.exceptions.RequestException:
         pytest.skip("Server not running on localhost:3000. Run: python run_server.py")
 
