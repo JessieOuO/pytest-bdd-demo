@@ -1,13 +1,13 @@
 # SDET BDD - pytest-bdd + Selenium + Security Scenarios
 
-feature file (Gherkin) → @scenario (pytest 入口) → @given/@when/@then (Python code)
+[//]: # (feature file &#40;Gherkin&#41; → @scenario &#40;pytest 入口&#41; → @given/@when/@then &#40;Python code&#41;)
 
-資安公司 SDET 面試專案，展示：
-- **Unit Tests**：直接測試業務邏輯（AuthService）- 快速、不依賴 server
-- **API Tests**：測試 HTTP endpoints（lockout、session、權限）
-- **UI Tests**：pytest-bdd + Selenium Page Object（防暴力破解、權限導向）
-- **Web App**：Flask 登入系統（session 管理、帳號鎖定）
-- **資安思維**：錯誤訊息不洩漏帳號、多次失敗鎖帳、權限檢查
+[//]: # (資安公司 SDET 面試專案，展示：)
+[//]: # (- **Unit Tests**：直接測試業務邏輯（AuthService）- 快速、不依賴 server)
+[//]: # (- **API Tests**：測試 HTTP endpoints（lockout、session、權限）)
+[//]: # (- **UI Tests**：pytest-bdd + Selenium Page Object（防暴力破解、權限導向）)
+[//]: # (- **Web App**：Flask 登入系統（session 管理、帳號鎖定）)
+[//]: # (- **資安思維**：錯誤訊息不洩漏帳號、多次失敗鎖帳、權限檢查)
 
 ## 專案結構
 
