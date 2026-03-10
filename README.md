@@ -1,13 +1,12 @@
 # SDET BDD - pytest-bdd + Selenium + Security Scenarios
 
-[//]: # (feature file &#40;Gherkin&#41; → @scenario &#40;pytest 入口&#41; → @given/@when/@then &#40;Python code&#41;)
-
-[//]: # (資安公司 SDET 面試專案，展示：)
-[//]: # (- **Unit Tests**：直接測試業務邏輯（AuthService）- 快速、不依賴 server)
-[//]: # (- **API Tests**：測試 HTTP endpoints（lockout、session、權限）)
-[//]: # (- **UI Tests**：pytest-bdd + Selenium Page Object（防暴力破解、權限導向）)
-[//]: # (- **Web App**：Flask 登入系統（session 管理、帳號鎖定）)
-[//]: # (- **資安思維**：錯誤訊息不洩漏帳號、多次失敗鎖帳、權限檢查)
+QA/SDET 面試可用的專案模板:
+feature file (Gherkin) → @scenario (pytest 入口) → @given/@when/@then (Python code)
+- **Unit Tests**：直接測試業務邏輯（AuthService）- 快速、不依賴 server
+- **API Tests**：測試 HTTP endpoints（lockout、session、權限）
+- **UI Tests**：pytest-bdd + Selenium Page Object（防暴力破解、權限導向）
+- **Web App**：Flask 登入系統（session 管理、帳號鎖定）
+- **資安思維**：錯誤訊息不洩漏帳號、多次失敗鎖帳、權限檢查
 
 ## 專案結構
 
@@ -156,12 +155,12 @@ def test_user_can_login():
 
 **Q1: 為什麼 Unit 測試不需要 server？**
 
-> "Unit 測試直接測試 Python 類別的業務邏輯（如 `AuthService.login()`），不經過 HTTP layer。這樣測試執行速度快、容易定位問題，符合測試金字塔原則。
+> Unit 測試直接測試 Python 類別的業務邏輯（如 `AuthService.login()`），不經過 HTTP layer。這樣測試執行速度快、容易定位問題，符合測試金字塔原則。
 > 而 API 測試則測試 HTTP endpoints（如 `POST /login`），需要啟動 Flask server，測試 routing、status codes、session 管理等 web layer 的行為。
-> UI 測試則是透過 Selenium 模擬真實使用者操作瀏覽器，測試完整的使用者體驗。"
+> UI 測試則是透過 Selenium 模擬真實使用者操作瀏覽器，測試完整的使用者體驗。
 
 **Q2: 為什麼 `test_api_endpoints.py` 不在 `tests/steps/` 目錄下？**
 
-> "`tests/steps/` 目錄是專門給 BDD (pytest-bdd) 測試使用的，裡面的測試文件都使用 `@scenario`、`@given`、`@when`、`@then` 等 pytest-bdd decorators，並對應 `features/*.feature` 的 Gherkin scenarios。
+> `tests/steps/` 目錄是專門給 BDD (pytest-bdd) 測試使用的，裡面的測試文件都使用 `@scenario`、`@given`、`@when`、`@then` 等 pytest-bdd decorators，並對應 `features/*.feature` 的 Gherkin scenarios。
 > 而 `test_api_endpoints.py` 是傳統的 pytest 測試風格，直接使用 `requests` 庫測試 HTTP endpoints，沒有使用 pytest-bdd，也沒有對應的 .feature 文件。
-> 這樣的目錄結構設計讓職責更清晰：`steps/` 專門放 BDD step definitions，其他傳統 pytest 測試放在 `tests/` 根目錄下。"
+> 這樣的目錄結構設計讓職責更清晰：`steps/` 專門放 BDD step definitions，其他傳統 pytest 測試放在 `tests/` 根目錄下。
